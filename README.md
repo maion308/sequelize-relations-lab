@@ -2,7 +2,7 @@
 
 ## Define a relationship
 
-Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your models.js file.
+Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your `models.js` file.
 
 ```js
 const Artist = sequelize.define('artist', {
@@ -26,7 +26,7 @@ Record.belongsTo(Artist);
 
 ## Relating two instances
 
-A model with relationships defined will have a `setOtherModel()` method defined, to establish a relationship. When creating data in your seed.js file, you'll want to set these relationships:
+A model with relationships defined will have a `setOtherModel()` method defined, to establish a relationship. When creating data in your `seed.js` file, you'll want to set these relationships:
 
 ```js
 const beyonce = await Artist.create({
