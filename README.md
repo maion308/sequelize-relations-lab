@@ -2,7 +2,7 @@
 
 ## Define a relationship
 
-Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships.
+Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your models.js file.
 
 ```js
 const Artist = sequelize.define('artist', {
