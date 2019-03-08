@@ -56,9 +56,8 @@ const sequelize = new Sequelize({
   operatorsAliases: Op,
 });
 
-// create models for Author and Book
-
-// establish relationships between your models
+// create models for Author and Book (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
+// establish relationships between your models (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
 
 module.exports = {
   Author,
@@ -82,7 +81,7 @@ const main = async () => {
     where: {}
   });
   
-  // create books and authors and relationships here
+  // create books and authors and relationships here (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
   
  };
  
@@ -99,7 +98,7 @@ const { Author, Book } = require('./models');
 const app = express();
 const port = process.env.PORT || 3000
 
-// establish routes
+// establish routes (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 ```
