@@ -33,7 +33,11 @@ Run `psql` and check `\l` to make sure your database was created. If you see it 
 touch server.js resetdb.js seed.js model.js .gitignore
 ```
 
-Open your project in your text editor. Make sure to put `node_modules` in your `.gitignore` file.
+Open your project in your text editor. Make sure to put `node_modules` in your `.gitignore` file. 
+
+Once you've successfully come this far, got back to your terminal and `git add .` and `git commit -m "initial commit"`. Great work!
+
+## 
 
 
 
