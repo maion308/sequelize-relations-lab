@@ -40,7 +40,7 @@ Open your project in your text editor. Make sure to put `node_modules` in your `
 "resetDb": "node resetDb.js"
 ```
 
-Once you've successfully come this far, got back to your terminal and `git add .` and `git commit -m "initial commit"`. Great work!
+Once you've successfully come this far, go back to your terminal and `git add .` and `git commit -m "initial commit"`. Great work!
 
 ## Basic Building Blocks
 
