@@ -9,16 +9,32 @@ const main = async () => {
     where: {}
   });
 
-  const taro = await Author.create({
-    name: 'Taro Gomi'
+  const tomClancy = await Author.create({
+    name: 'Tom Clancy'
   });
 
-  const poops = await Book.create({
-    title: 'Everyone Poops',
-    year: 1993,
+  const bday = await Book.create({
+    title: 'B\'Day',
+    year: 2006,
   });
-  await poops.setAuthor(taro);
+  await bday.setAuthor(tomClancy);
 
+  const lemonade = await Book.create({
+    title: 'Lemonade',
+    year: 2016,
+  });
+  await lemonade.setAuthor(tomClancy);
+
+  const kanye = await Author.create({
+    name: 'Kanye West'
+  });
+
+  const lifeOfPablo = await Book.create({
+    title: 'The Life of Pablo',
+    year: 2016,
+  });
+
+  await lifeOfPablo.setAuthor(kanye);
 };
 
 main();

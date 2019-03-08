@@ -16,10 +16,9 @@ const Book = sequelize.define('book', {
   year: Sequelize.INTEGER,
 })
 
-// SET UP RELATIONS BETWEEN AUTHOR AND BOOKS
+Author.hasMany(Book, { onDelete: 'cascade' });
 
-
-//
+Book.belongsTo(Author);
 
 sequelize.sync();
 
