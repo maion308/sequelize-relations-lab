@@ -189,4 +189,7 @@ const beyoncesRecords = await beyonce.getRecords();
 // [ { title: 'Lemonade', year: 2016, ... }];
 ```
 
+## Test it out
+Run `npm start`, open `localhost:3000` on your browser, visit each of your endpoints, and check to make sure the correct data is being displayed.
+
 # Great work!
