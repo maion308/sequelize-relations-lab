@@ -45,7 +45,7 @@ Once you've successfully come this far, go back to your terminal and `git add .`
 ## Basic Building Blocks
 
 ### models.js
-Import and instantial sequelize. 
+Import and instantiate Sequelize. 
 ```
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
