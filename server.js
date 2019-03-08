@@ -8,19 +8,19 @@ const port = process.env.PORT || 3000
 app.get('/', (req, res) => res.send('Building an author database!'))
 
 app.get('/authors/:id/books', async (req,res) => {
-  const id = req.params.id
-  const author = await Author.findByPk(id)
-  const booksData = await Book.findAll({
-      include: [
-        {model: Author, where: {id: id}}
-      ]
-    })
-  const books = booksData.map(book => book.dataValues)
-  res.json(
-    {
-      Books: books,
-    }
-  )
+  try{
+    const id = req.params.id
+    const author = await Author.findByPk(id)
+    const booksData = await author.getBooks()
+    const books = booksData.map(book => book.dataValues)
+    res.json(
+      {
+        Books: books,
+      }
+    )
+  } catch(e) {
+    console.log(e)
+  }
 
 })
 
