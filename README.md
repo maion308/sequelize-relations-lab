@@ -1,5 +1,42 @@
 # sequelize-relations-lab
 
+## Getting Started
+Create a new project folder and `cd` into that folder. Run `npm init`. 
+
+Add Sequelize to your project:
+
+```
+npm install sequelize
+```
+
+Install the Postgres JavaScript library for sequelize to use:
+
+```
+npm install pg
+```
+
+Install Nodemon:
+
+```
+npm install nodemon
+```
+
+Create your database:
+
+```
+createdb <database name>
+```
+
+Run `psql` and check `\l` to make sure your database was created. If you see it there, you can exit `psql`. Next, add some files into your project folder:
+
+```
+touch server.js resetdb.js seed.js model.js .gitignore
+```
+
+Open your project in your text editor. Make sure to put `node_modules` in your `.gitignore` file.
+
+
+
 ## Define a relationship
 
 Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your `models.js` file.
