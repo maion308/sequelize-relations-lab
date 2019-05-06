@@ -178,7 +178,7 @@ Great work. For your final step, you'll need to move to your `server.js` file an
 ```
 
 
-### Accessing related instances
+### Method 1: Accessing related instances
 
 Models also have `getOtherModel()` methods to query related instances. You can use this method in your `server.js` file to get all of the books that belong to an author:
 
@@ -186,6 +186,53 @@ Models also have `getOtherModel()` methods to query related instances. You can u
 const austen = await Author.findByPk(1);
 const austenBooks = await austen.getBooks();
 // [ { title: 'Pride and Prejudice', year: 1813, ... }];
+```
+
+### Method 2: Eager Loading
+
+When we use the above method to access the related instance, we lose out on being able to return both without an object assignment. However, by implementing [_eager loading_](https://sequelize-guides.netlify.com/eager-loading/), we're able to _include_ a related resource within the query.
+```js
+// with given Author & Book models
+// Author.hasMany(Book);
+
+app.get('/Authors', async (req, res) => {
+  try {
+    const Authors = await Author.findAll({
+        include: [ Book ]       
+    });
+    res.send(Authors);  
+  } catch (e) {
+    res.status(500).json({ msg: e.message  });             
+   }       
+});
+```
+
+A sample response might look like:
+
+```js
+{
+  "name": 'Kurt Vonnegut',
+  "books": [
+    {
+      "title": "Slaughterhouse Five",
+      "year": 1969,
+      "book_image_url": "https://images-na.ssl-images-amazon.com/images/I/71QcX1DbklL.jpg",
+      "description": "a science fiction-infused anti-war novel by Kurt Vonnegut about the World War II experiences of Billy Pilgrim."
+    },
+    {
+      "title": "Cat's Cradle",
+      "year": 1963,
+      "book_image_url": "https://images-na.ssl-images-amazon.com/images/I/81NIfUlv2DL.jpg",
+      "description": "explores issues of science, technology, and religion, satirizing the arms race and many other targets along the way."
+    },
+    {
+      "title": "Breakfast of Champions",
+      "year": 1973,
+      "book_image_url": "https://images.gr-assets.com/books/1327934446l/4980.jpg",
+      "description": "is set predominantly in the fictional town of Midland City, Ohio and focuses on two characters: Dwayne Hoover, a Midland resident, Pontiac dealer and affluent figure in the city and Kilgore Trout, a widely published but mostly unknown science fiction author."
+    }
+  ]
+}
 ```
 
 ### Test it out
