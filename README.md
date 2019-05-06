@@ -5,37 +5,37 @@ Create a new project folder and `cd` into that folder. Run `npm init`.
 
 Add Sequelize to your project:
 
-```
+```bash
 npm install sequelize
 ```
 
 Install the Postgres JavaScript library for sequelize to use:
 
-```
+```bash
 npm install pg
 ```
 
 If you don't have it globally installed, install Nodemon:
 
-```
+```bash
 npm install nodemon
 ```
 
 Create your database:
 
-```
+```bash
 createdb <database name>
 ```
 
 Run `psql` and check `\l` to make sure your database was created. If you see it there, you can exit `psql`. Next, add some files into your project folder:
 
-```
+```bash
 touch server.js resetDb.js seed.js model.js .gitignore
 ```
 
 Open your project in your text editor. Make sure to put `node_modules` in your `.gitignore` file. Also, go to your `package.json` file and make sure Sequelize, Nodemon, and Express are in your dependencies. Also, add the following scripts:
 
-```
+```js
 "start": "nodemon server.js",
 "resetDb": "node resetDb.js"
 ```
@@ -47,7 +47,7 @@ Once you've successfully set up your project folder, go back to your terminal an
 ###### models.js
 Import and instantiate Sequelize.
 
-```
+```js
 const Sequelize = require('sequelize');
 
 const db = new Sequelize({
@@ -68,7 +68,7 @@ module.exports = {
 ###### seed.js
 In your `seed.js` folder, import your `Author` and `Book` models. Then, create an async function to 1) make sure the database is empty, 2) create your new instances of authors and books, and 3) establish the relationships between those instances.
 
-```
+```js
 const { Author, Book } = require('./models');
 
 const main = async () => {
@@ -91,7 +91,7 @@ const main = async () => {
 ###### server.js
 Import and instantiate Express and establish your port.
 
-```
+```js
 const express = require('express');
 const { Author, Book } = require('./models');
 
@@ -107,7 +107,7 @@ app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your `models.js` file. For your file, you'll be creating `Author` and `Book` models, but you can use the below as a guide:
 
-```
+```js
 const Author = db.define('author', {
   name: Sequelize.STRING
 });
@@ -163,7 +163,7 @@ await pride.setAuthor(austen);
 
 Go ahead and create several authors and books that belong to those authors. Once you've finished creating your seed data, make sure everything is saved, go back to your terminal, and run the following commands:
 
-```
+```bash
 npm resetDb
 node seed.js
 
@@ -171,7 +171,7 @@ node seed.js
 
 Great work. For your final step, you'll need to move to your `server.js` file and add your routes. Let's add the following:
 
-```
+```md
 /authors (shows all authors)
 /books (shows all books)
 /authors/:id/books (shows all books by a particular author)
@@ -182,7 +182,7 @@ Great work. For your final step, you'll need to move to your `server.js` file an
 
 Models also have `getOtherModel()` methods to query related instances. You can use this method in your `server.js` file to get all of the books that belong to an author:
 
-```
+```js
 const austen = await Author.findByPk(1);
 const austenBooks = await austen.getBooks();
 // [ { title: 'Pride and Prejudice', year: 1813, ... }];
