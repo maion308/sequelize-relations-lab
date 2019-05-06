@@ -1,6 +1,6 @@
 # Sequelize Relations Lab
 
-## Getting Started
+### Getting Started
 Create a new project folder and `cd` into that folder. Run `npm init`. 
 
 Add Sequelize to your project:
@@ -15,7 +15,7 @@ Install the Postgres JavaScript library for sequelize to use:
 npm install pg
 ```
 
-Install Nodemon:
+If you don't have it globally installed, install Nodemon:
 
 ```
 npm install nodemon
@@ -40,20 +40,19 @@ Open your project in your text editor. Make sure to put `node_modules` in your `
 "resetDb": "node resetDb.js"
 ```
 
-Once you've successfully come this far, go back to your terminal and `git add .` and `git commit -m "initial commit"`. Great work!
+Once you've successfully set up your project folder, go back to your terminal and `git add .` and `git commit -m "initial commit"`. Great work!
 
-## Basic Building Blocks
+### Basic Building Blocks
 
-### models.js
-Import and instantiate Sequelize. 
+###### models.js
+Import and instantiate Sequelize.
+
 ```
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 
-const sequelize = new Sequelize({
+const db = new Sequelize({
   database: <database name>,
-  dialect: 'postgres',
-  operatorsAliases: Op,
+  dialect: 'postgres'
 });
 
 // create models for Author and Book (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
@@ -62,12 +61,12 @@ const sequelize = new Sequelize({
 module.exports = {
   Author,
   Book,
-  sequelize
+  db
 };
 ```
 
-### seed.js
-In your seed.js folder, import your Author and Book models. Then, create an async function to 1) make sure the database is empty, 2) create your new instances of authors and books, and 3) establish the relationships between those instances.
+###### seed.js
+In your `seed.js` folder, import your `Author` and `Book` models. Then, create an async function to 1) make sure the database is empty, 2) create your new instances of authors and books, and 3) establish the relationships between those instances.
 
 ```
 const { Author, Book } = require('./models');
@@ -81,14 +80,15 @@ const main = async () => {
     where: {}
   });
   
-  // create books and authors and relationships here (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
+  // create books and authors and relationships here
+  // (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
   
  };
  
  main();
 ```
 
-### server.js
+###### server.js
 Import and instantiate Express and establish your port.
 
 ```
@@ -96,40 +96,39 @@ const express = require('express');
 const { Author, Book } = require('./models');
 
 const app = express();
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 // establish routes (HOLD OFF FOR NOW, INSTRUCTIONS FOR THIS BELOW)
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 ```
 
+### Define a relationship
 
-
-## Define a relationship
-
-Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your `models.js` file. For your file, you'll be creating Author and Book models, but you can use the below as a guide:
+Considering a one-to-many relationship for artists and their records, Sequelize offers `hasMany` and `belongsTo` methods on each model to register these relationships. You'll want to establish these relationships in your `models.js` file. For your file, you'll be creating `Author` and `Book` models, but you can use the below as a guide:
 
 ```
-const Artist = sequelize.define('artist', {
+const Author = db.define('author', {
   name: Sequelize.STRING
 });
 
-const Record = sequelize.define('record', {
+const Book = db.define('book', {
   title: Sequelize.STRING,
   year: Sequelize.INTEGER,
-  cover_image_url: Sequelize.STRING
+  book_image_url: Sequelize.STRING,
+  description: Sequelize.TEXT
 });
 
-Artist.hasMany(Record, { onDelete: 'cascade' });
-Record.belongsTo(Artist);
+Author.hasMany(Book, { onDelete: 'cascade' });
+Book.belongsTo(Author);
 
-// The onDelete: cascade bit here deletes the records an artist has
-// if an artist is deleted. This avoids us having to delete the records
-// first, then deleting the artist.
+// The onDelete: cascade bit here deletes the books an author has
+// if an author is deleted. This avoids us having to delete the books
+// first, then deleting the author.
 
 ```
 
-## Syncing your models
+### Syncing your models
 In your `resetDb.js` file, add the following code to make the tables in our database based on our models defined in the `models.js` file.
 
 ```js
@@ -143,22 +142,23 @@ const main = async () => {
 main();
 ```
 
-## Relating two instances
+### Relating two instances
 
 A model with relationships defined will have a `setOtherModel()` method defined, to establish a relationship. When creating data in your `seed.js` file, you'll want to set these relationships:
 
 ```js
-const beyonce = await Artist.create({
-  name: 'Beyoncé'
+const austen = await Author.create({
+  name: 'Jane Austen'
 });
 
-const lemonade = await Record.create({
-  title: 'Lemonade',
-  year: 2016,
-  cover_image_url: 'https://cdn.shopify.com/s/files/1/0993/9646/products/SNY533682CD.jpg',
+const pride = await Book.create({
+  title: 'Pride and Prejudice',
+  year: 1813,
+  cover_image_url: 'https://cdn.theatlantic.com/media/old_wire/img/upload/2013/01/14/9780307950901_p0_v1_s260x420.jpeg',
+  description: 'In a remote Hertfordshire village, far off the good coach roads of George III\'s England, a country squire of no great means must marry off his five vivacious daughters.'
 });
 
-await lemonade.setArtist(beyonce);
+await pride.setAuthor(austen);
 ```
 
 Go ahead and create several authors and books that belong to those authors. Once you've finished creating your seed data, make sure everything is saved, go back to your terminal, and run the following commands:
@@ -178,17 +178,21 @@ Great work. For your final step, you'll need to move to your `server.js` file an
 ```
 
 
-## Accessing related instances
+### Accessing related instances
 
-Models also have `getOtherModel()` methods to query related instances. You can use this method in your `server.js` file to get all of the books that belong to an author, or in the example below, all of the records that belong to an artist:
+Models also have `getOtherModel()` methods to query related instances. You can use this method in your `server.js` file to get all of the books that belong to an author:
 
 ```
-const beyonce = await Artist.findByPk(1);
-const beyoncesRecords = await beyonce.getRecords();
-// [ { title: 'Lemonade', year: 2016, ... }];
+const austen = await Author.findByPk(1);
+const austenBooks = await austen.getBooks();
+// [ { title: 'Pride and Prejudice', year: 1813, ... }];
 ```
 
-## Test it out
+### Test it out
 Run `npm start`, open `localhost:3000` on your browser, visit each of your endpoints, and check to make sure the correct data is being displayed.
+
+### BONUS
+
+Refactor the project to use [Express Router](https://expressjs.com/en/api.html#express.router). This will involve creating a `bookRouter` and `authorRouter` moving over all the routes previously contained in the `server.js` to the routes folder.
 
 # Great work!
