@@ -1,4 +1,4 @@
-# sequelize-relations-lab
+# Sequelize Relations Lab
 
 ## Getting Started
 Create a new project folder and `cd` into that folder. Run `npm init`. 
