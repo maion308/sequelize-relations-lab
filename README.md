@@ -12,7 +12,7 @@ npm install sequelize
 Install the Postgres JavaScript library for sequelize to use:
 
 ```bash
-npm install pg
+npm install express pg
 ```
 
 If you don't have it globally installed, install Nodemon:
